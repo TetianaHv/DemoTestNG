@@ -16,10 +16,6 @@ public class GoogleSearchStylusTest extends BaseUITest {
     @Test
     public void positiveEnterSearchTest() {
         driver.findElement(By.name("q")).sendKeys("iphone kyiv buy" + Keys.ENTER);
-
-        git remote add origin https://github.com/TetianaHv/DemoTestNG.git
-
-
     }
 }
 
