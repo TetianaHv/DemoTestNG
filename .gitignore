@@ -4,6 +4,7 @@
 out/
 .idea/
 .idea_modules/
+DemoTestNG.iml
 *.ipr
 *.iws
 
