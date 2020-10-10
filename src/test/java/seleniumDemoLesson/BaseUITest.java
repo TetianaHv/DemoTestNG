@@ -15,7 +15,7 @@ public class BaseUITest {
     public void setupDriver() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 15);
     }
 
     @AfterClass

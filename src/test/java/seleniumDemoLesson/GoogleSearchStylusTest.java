@@ -32,7 +32,7 @@ public class GoogleSearchStylusTest extends BaseUITest {
 
         for (int i = 1; i <= 5; i++) {
             try {
-                //'cases.kiev.ua' 2 page, 'ek.ua' 4 page, 'epicentrk.ua' no
+                //'cases.kiev.ua', 'ek.ua', 'epicentrk.ua'
                 driver.findElement(By.xpath("//*[contains(text(), 'stylus.ua')]"));
                 System.out.println("STYLUS.UA found on " + i + " page");
                 break;
@@ -61,15 +61,15 @@ public class GoogleSearchStylusTest extends BaseUITest {
                 List<WebElement> webList = driver.findElements(By.tagName("cite"));
                 String str;
                 String temp = null;
-                for (int j = 0; j < webList.size(); j++) {
-                    str = webList.get(j).getText();
+                for (WebElement webElement : webList) {
+                    str = webElement.getText();
                     if (str.contains("stylus.ua")) {
                         temp = str;
                     }
                 }
 
                 if (temp != null) {
-                    //'cases.kiev.ua' 2 page, 'ek.ua' 4 page, 'epicentrk.ua' no
+                    //'cases.kiev.ua', 'ek.ua', 'epicentrk.ua'
                     System.out.println("STYLUS.UA found on " + i + " page");
                     break;
                 } else {

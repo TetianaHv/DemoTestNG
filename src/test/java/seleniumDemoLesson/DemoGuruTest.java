@@ -95,5 +95,4 @@ public class DemoGuruTest extends BaseUITest {
         driver.switchTo().alert().accept();
         assertEquals(driver.getCurrentUrl(), loginUrl);
     }
-
 }
