@@ -4,9 +4,8 @@
   <parameter name="one" value="Test two parameter"/>
   <test name="Main test">
     <classes>
-      <class name="seleniumDemoLesson.DemoGuruTest"/>
-      <class name="seleniumDemoLesson.GoogleSearchTest"/>
-      <class name="seleniumDemoLesson.GoogleSearchStylusTest"/>
+      <class name="rozetka.RozetkaComparisonOfTwoMonitorsTest"/>
+      <class name="rozetka.RozetkaFiltersTests"/>
     </classes>
   </test>
 </suite>
