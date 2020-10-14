@@ -8,14 +8,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class BaseUITest {
-    WebDriver driver;
-    WebDriverWait wait;
+    public WebDriver driver;
+    public WebDriverWait wait;
 
     @BeforeClass
     public void setupDriver() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 15);
+        wait = new WebDriverWait(driver, 25);
     }
 
     @AfterClass
