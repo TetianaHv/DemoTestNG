@@ -8,10 +8,9 @@ import org.testng.annotations.Test;
 import seleniumDemoLesson.BaseUITest;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
     String url = "https://rozetka.com.ua/";
@@ -21,7 +20,6 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
     public void monitorComparingTest() throws Exception {
 //        driver.manage().window().maximize();
         driver.get(url);
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         //Hover "Ноутбуки и компьютеры", click "Мониторы"
         Actions action = new Actions(driver);
         WebElement categories = driver.findElement(By.xpath("//a[@class='menu-categories__link' and contains(text(), 'Ноутбуки и компьютеры')]"));
@@ -35,25 +33,26 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         //Add monitor to comparison.
         // Verify icon (1) appears in header close to comparison image (scales).
         // Remember price, name
-        wait.until(presenceOfElementLocated(By.xpath("//p[contains(@class, 'product-prices__big') and contains(@class, 'product-prices__big_color_red')]")));
+        wait.until(presenceOfElementLocated(By.cssSelector("p.product-prices__big.product-prices__big_color_red")));
         driver.findElement(By.xpath("//button[@class='compare-button']")).click();
-        WebElement comparisonNumber = driver.findElement(By.cssSelector("span.header-actions__button-counter"));
-        assertEquals(comparisonNumber.getText(), "1");
+        By comparisonNumber = By.cssSelector("span.header-actions__button-counter");
+        wait.until(presenceOfElementLocated(comparisonNumber));
+        assertEquals(driver.findElement(comparisonNumber).getText(), "1");
 
         WebElement name = driver.findElement(By.tagName("h1"));
-        String monitorName = name.getText();
-        WebElement price = driver.findElement(By.xpath("//p[contains(@class, 'product-prices__big') and contains(@class, 'product-prices__big_color_red')]"));
-        String monitorPrice = price.getText().replaceAll(" ", "");
+        String monitorName1 = name.getText();
+        WebElement price = driver.findElement(By.cssSelector("p.product-prices__big.product-prices__big_color_red"));
+        String monitorPrice1 = price.getText().replaceAll(" ", "");
         //Click back button in browser
         driver.navigate().back();
         //Find first monitor which price is less then first monitor.
         // Click on image of found monitor. Wait for page to load
         wait.until(presenceOfAllElementsLocatedBy(By.cssSelector("span.goods-tile__price-value")));
-        findMonitor(monitorPrice.substring(0, 4));
+        findMonitor(monitorPrice1.substring(0, 4));
         //Add second monitor to comparison.
         // Verify icon (2) appears in header close to comparison image (scales).
         // Remember price, name
-        wait.until(presenceOfElementLocated(By.xpath("//p[contains(@class, 'product-prices__big') and contains(@class, 'product-prices__big_color_red')]")));
+        wait.until(presenceOfElementLocated(By.cssSelector("p.product-prices__big.product-prices__big_color_red")));
         driver.findElement(By.xpath("//button[@class='compare-button']")).click();
         WebElement comparisonNumber2 = driver.findElement(By.cssSelector("span.header-actions__button-counter"));
         wait.until(ExpectedConditions.not(textToBePresentInElement(comparisonNumber2, "1")));
@@ -61,7 +60,7 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
 
         WebElement name2 = driver.findElement(By.className("product__title"));
         String monitorName2 = name2.getText();
-        WebElement price2 = driver.findElement(By.xpath("//p[contains(@class, 'product-prices__big') and contains(@class, 'product-prices__big_color_red')]"));
+        WebElement price2 = driver.findElement(By.cssSelector("p.product-prices__big.product-prices__big_color_red"));
         String monitorPrice2 = price2.getText().replaceAll(" ", "");
         //Click on comparison image in header.
         //Click on "Мониторы (2)". Wait for page to load
@@ -69,18 +68,25 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         driver.findElement(By.cssSelector("a.comparison-modal__link")).click();
         //Verify that in comparison you have just 2 monitors
         wait.until(presenceOfElementLocated(By.cssSelector("li.products-grid__cell")));
-        List<WebElement> list = driver.findElements(By.cssSelector("li.products-grid__cell"));
-        assertEquals(list.size(), 2);
+        List<WebElement> productsList = driver.findElements(By.cssSelector("li.products-grid__cell"));
+        assertEquals(productsList.size(), 2);
 
         //Verify that names are correct (equal to names which you stored in step4 and step7)
         //Verify that prices are correct (equal to prices which you stored in step4 and step7)
-        List<WebElement> pricesList = driver.findElements(By.xpath("//*/rz-compare-tile/div/div[2]/div[2]/div[1]/div"));
-        List<WebElement> namesList = driver.findElements(By.xpath("//li//a[@class='product__heading']"));
+        String productName1 = productsList.get(0).findElement(By.className("product__heading")).getText();
+        String productName2 = productsList.get(1).findElement(By.className("product__heading")).getText();
 
-        assertTrue(pricesList.get(0).getText().replaceAll(" ", "").contains(monitorPrice));
-        assertTrue(pricesList.get(1).getText().replaceAll(" ", "").contains(monitorPrice2));
-        assertEquals(monitorName, namesList.get(0).getText());
-        assertEquals(monitorName2, namesList.get(1).getText());
+        String productPrice1 = productsList.get(0).findElement(By.cssSelector("div.product__price.product__price--red")).getText().replaceAll("\\s+", "");
+        String[] productPrice1Split = productPrice1.split("₴");
+        productPrice1 = productPrice1Split[1] + "₴";
+        String productPrice2 = productsList.get(1).findElement(By.cssSelector("div.product__price.product__price--red")).getText().replaceAll("\\s+", "");
+        String[] productPrice2Split = productPrice2.split("₴");
+        productPrice2 = productPrice2Split[1] + "₴";
+
+        assertEquals(monitorName1, productName1);
+        assertEquals(monitorName2, productName2);
+        assertEquals(monitorPrice1, productPrice1);
+        assertEquals(monitorPrice2, productPrice2);
     }
 
     private void findMonitor(String price) throws Exception {
@@ -91,7 +97,7 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
                 throw new Exception("There is no such monitor");
             }
             if (Integer.parseInt(price) > Integer.parseInt(str)) {
-                List<WebElement> webList2 = driver.findElements(By.xpath(" //a[@class='goods-tile__picture']"));
+                List<WebElement> webList2 = driver.findElements(By.xpath("//a[@class='goods-tile__picture']"));
                 webList2.get(i).click();
                 break;
             }
