@@ -19,11 +19,12 @@ public class RozetkaFiltersTests extends BaseUITest {
     String searchText = "samsung";
     String minPrice = "5000";
     String maxPrice = "15000";
+    String builtInMemoryValue = "256 ГБ";
 
     @BeforeMethod
     public void startSteps() {
         driver.get(url);
-        driver.findElement(By.xpath("//input[@name='search']")).sendKeys(searchText + Keys.ENTER);
+        driver.findElement(By.name("search")).sendKeys(searchText + Keys.ENTER);
         By block = By.xpath("//span[@class='categories-filter__link-title' and contains(text(), 'Мобильные телефоны')]");
         wait.until(presenceOfElementLocated(block));
         driver.findElement(block).click();
@@ -101,9 +102,24 @@ public class RozetkaFiltersTests extends BaseUITest {
 5. Verify all filtered products
  */
     @Test
-    public void productNFilterTest() {
-        driver.get(url);
+    public void productBuiltInMemoryFilterTest() throws Exception {
+        scrollToElement(driver.findElement(By.xpath("//span[@class='sidebar-block__toggle-title' and text()=' Встроенная память ']")));
+        WebElement checkboxBuiltInMemory = driver.findElement(By.id(builtInMemoryValue));
+        Actions act = new Actions(driver);
+        act.moveToElement(checkboxBuiltInMemory).click().build().perform();
 
+        By list = By.className("goods-tile__heading");
+        wait.until(presenceOfElementLocated(By.linkText("Телефоны, наушники, GPS")));
+
+        List<WebElement> listOfNames = driver.findElements(list);
+        for (int i = 0; i < listOfNames.size(); i++) {
+            String itemName = listOfNames.get(i).getAttribute("title");
+            if (itemName.contains(builtInMemoryValue.substring(0, 2))) {
+                continue;
+            } else {
+                throw new Exception(itemName + " does not contain " + builtInMemoryValue);
+            }
+        }
     }
 
     private void scrollToElement(WebElement element) {
