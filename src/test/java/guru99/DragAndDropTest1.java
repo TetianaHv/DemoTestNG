@@ -8,7 +8,7 @@ import seleniumDemoLesson.BaseUITest;
 
 import static org.testng.Assert.assertTrue;
 
-public class DragAndDropTest extends BaseUITest {
+public class DragAndDropTest1 extends BaseUITest {
 
     @Test
     public void positiveDragAndDrop() {
