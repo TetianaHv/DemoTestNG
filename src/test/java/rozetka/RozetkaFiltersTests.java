@@ -5,19 +5,30 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import seleniumDemoLesson.BaseUITest;
 
 import java.util.List;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class RozetkaFiltersTests extends BaseUITest {
     String url = "https://rozetka.com.ua/";
     String searchText = "samsung";
+    String minPrice = "5000";
+    String maxPrice = "15000";
+
+    @BeforeMethod
+    public void startSteps() {
+        driver.get(url);
+        driver.findElement(By.xpath("//input[@name='search']")).sendKeys(searchText + Keys.ENTER);
+        By block = By.xpath("//span[@class='categories-filter__link-title' and contains(text(), 'Мобильные телефоны')]");
+        wait.until(presenceOfElementLocated(block));
+        driver.findElement(block).click();
+        wait.until(presenceOfElementLocated(By.className("sidebar-block")));
+    }
 
     /*
 1. Navigate to https://rozetka.com.ua/
@@ -28,25 +39,19 @@ public class RozetkaFiltersTests extends BaseUITest {
  */
     @Test
     public void productFilterTest() throws Exception {
-        driver.get(url);
-        driver.findElement(By.xpath("//input[@name='search']")).sendKeys(searchText + Keys.ENTER);
-        By block = By.xpath("//span[@class='categories-filter__link-title' and contains(text(), 'Мобильные телефоны')]");
-        wait.until(presenceOfElementLocated(block));
-        driver.findElement(block).click();
-
-        wait.until(presenceOfElementLocated(By.className("sidebar-block")));
-        scrollToElement(driver.findElement(By.cssSelector("div.sidebar-alphabet")));
+        scrollToElement(driver.findElement(By.xpath("//div[@data-filter-name='producer']")));
         WebElement checkboxApple = driver.findElement(By.id("Apple"));
         Actions act = new Actions(driver);
         act.moveToElement(checkboxApple).click().build().perform();
 
         wait.until(presenceOfElementLocated(By.className("sidebar-block")));
-        scrollToElement(driver.findElement(By.cssSelector("div.sidebar-alphabet")));
+        scrollToElement(driver.findElement(By.xpath("//div[@data-filter-name='producer']")));
         WebElement checkboxHonor = driver.findElement(By.id("Honor"));
         act.moveToElement(checkboxHonor).click().build().perform();
 
         By list = By.className("goods-tile__heading");
         wait.until(presenceOfAllElementsLocatedBy(list));
+
         List<WebElement> listOfNames = driver.findElements(list);
         for (int i = 0; i < listOfNames.size(); i++) {
             String itemName = listOfNames.get(i).getAttribute("title");
@@ -66,9 +71,26 @@ public class RozetkaFiltersTests extends BaseUITest {
     5. Verify all filtered products are products with price from range
      */
     @Test
-    public void productPriceFilterTest() {
-        driver.get(url);
+    public void productPriceFilterTest() throws Exception {
+        scrollToElement(driver.findElement(By.xpath("//div[@data-filter-name='price']")));
+        WebElement setMinPrice = driver.findElement(By.xpath("//input[@formcontrolname='min']"));
+        setMinPrice.clear();
+        setMinPrice.sendKeys(minPrice);
+        WebElement setMaxPrice = driver.findElement(By.xpath("//input[@formcontrolname='max']"));
+        setMaxPrice.clear();
+        setMaxPrice.sendKeys(maxPrice);
+        driver.findElement(By.className("slider-filter__button")).click();
 
+        wait.until(presenceOfAllElementsLocatedBy(By.cssSelector("span.goods-tile__price-value")));
+        List<WebElement> webList = driver.findElements(By.cssSelector("span.goods-tile__price-value"));
+        for (int i = 0; i < webList.size(); i++) {
+            String str = webList.get(i).getText().replaceAll(" ", "");
+            if (Integer.parseInt(minPrice) < Integer.parseInt(str) || Integer.parseInt(maxPrice) > Integer.parseInt(str)) {
+                continue;
+            } else {
+                throw new Exception("Price " + str + " not included in the interval " + minPrice + " - " + maxPrice);
+            }
+        }
     }
 
     /*
