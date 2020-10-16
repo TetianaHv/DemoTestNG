@@ -32,7 +32,6 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         findMonitor(mainPrice);
         //Add monitor to comparison.
         // Verify icon (1) appears in header close to comparison image (scales).
-        // Remember price, name
         wait.until(presenceOfElementLocated(By.cssSelector("p.product-prices__big.product-prices__big_color_red")));
         driver.findElement(By.xpath("//button[@class='compare-button']")).click();
         By comparisonNumber = By.cssSelector("span.header-actions__button-counter");
@@ -51,7 +50,6 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         findMonitor(monitorPrice1.substring(0, 4));
         //Add second monitor to comparison.
         // Verify icon (2) appears in header close to comparison image (scales).
-        // Remember price, name
         wait.until(presenceOfElementLocated(By.cssSelector("p.product-prices__big.product-prices__big_color_red")));
         driver.findElement(By.xpath("//button[@class='compare-button']")).click();
         WebElement comparisonNumber2 = driver.findElement(By.cssSelector("span.header-actions__button-counter"));
@@ -63,7 +61,7 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         WebElement price2 = driver.findElement(By.cssSelector("p.product-prices__big.product-prices__big_color_red"));
         String monitorPrice2 = price2.getText().replaceAll(" ", "");
         //Click on comparison image in header.
-        //Click on "Мониторы (2)". Wait for page to load
+        //Click on "Мониторы (2)".
         driver.findElement(By.className("header-actions__button-icon")).click();
         driver.findElement(By.cssSelector("a.comparison-modal__link")).click();
         //Verify that in comparison you have just 2 monitors
