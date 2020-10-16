@@ -28,7 +28,7 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         wait.until(textToBePresentInElement(monitorPath, "Мониторы"));
         monitorPath.click();
         //Find first monitor with price mainPrice less then 3000UAH
-        wait.until(presenceOfAllElementsLocatedBy(By.cssSelector("span.goods-tile__price-value")));
+        wait.until(presenceOfElementLocated(By.partialLinkText("Доставка")));
         findMonitor(mainPrice);
         //Add monitor to comparison.
         // Verify icon (1) appears in header close to comparison image (scales).
@@ -47,7 +47,7 @@ public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
         driver.navigate().back();
         //Find first monitor which price is less then first monitor.
         // Click on image of found monitor. Wait for page to load
-        wait.until(presenceOfAllElementsLocatedBy(By.cssSelector("span.goods-tile__price-value")));
+        wait.until(presenceOfElementLocated(By.cssSelector("span.goods-tile__price-value")));
         findMonitor(monitorPrice1.substring(0, 4));
         //Add second monitor to comparison.
         // Verify icon (2) appears in header close to comparison image (scales).
