@@ -85,7 +85,7 @@ public class RozetkaFiltersTests extends BaseUITest {
         List<WebElement> webList = driver.findElements(By.cssSelector("span.goods-tile__price-value"));
         for (int i = 0; i < webList.size(); i++) {
             String str = webList.get(i).getText().replaceAll(" ", "");
-            if (Integer.parseInt(minPrice) < Integer.parseInt(str) || Integer.parseInt(maxPrice) > Integer.parseInt(str)) {
+            if (Integer.parseInt(minPrice) <= Integer.parseInt(str) || Integer.parseInt(maxPrice) >= Integer.parseInt(str)) {
                 continue;
             } else {
                 throw new Exception("Price " + str + " not included in the interval " + minPrice + " - " + maxPrice);
