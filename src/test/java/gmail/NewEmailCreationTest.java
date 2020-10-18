@@ -13,11 +13,11 @@ import static org.testng.Assert.assertTrue;
 public class NewEmailCreationTest extends BaseUITest {
     String url = "https://stackoverflow.com";
     String gmailUrl = "https://accounts.google.com/signin/v2/identifier?continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&service=mail&sacu=1&rip=1&flowName=GlifWebSignIn&flowEntry=ServiceLogin";
-    String login = "tetiana.qaengineer@gmail.com";
-    String password = "qazwsxedcrfv123123!";
+    String login = "test@gmail.com"; //not valid
+    String password = "password"; //not valid
     String subject = "Test";
     String emailText = "Email body";
-    String filePath = "/Users/tetianahvozdieva/Desktop/file.png";
+    String filePath = "/Users/user/Desktop/file.png"; //not valid
     String fileName = "file.png";
 
     @Test
