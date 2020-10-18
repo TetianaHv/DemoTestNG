@@ -1,13 +1,11 @@
 package guru99;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.Point;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import seleniumDemoLesson.BaseUITest;
-
-import java.awt.*;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
