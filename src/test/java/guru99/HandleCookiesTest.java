@@ -24,7 +24,7 @@ public class HandleCookiesTest extends BaseUITest {
         //- Print out all cookies (all data)
         Set<Cookie> cookies = driver.manage().getCookies();
         for (Cookie cookie : cookies) {
-            System.out.println("Cookie Name: " + cookie.getName() + "; " + "Cookie Value: " + cookie.getValue() + "; " + "Cookie Domain: " + cookie.getDomain() + "; " + "Cookie Path: " + cookie.getPath() + "; " + "Cookie Expiry: " + cookie.getExpiry() + "; " + "Cookie Secure: " + cookie.isSecure());
+            System.out.println("Cookie Name: " + cookie.getName() + "; " + "Cookie Value: " + cookie.getValue() + "; " + "Cookie Domain: " + cookie.getDomain() + "; " + "Cookie Path: " + cookie.getPath() + "; " + "Cookie Expiry: " + cookie.getExpiry() + "; " + "Cookie HTTP: " + cookie.isHttpOnly() + "; " + "Cookie Secure: " + cookie.isSecure());
         }
         //- Clear all cookies
         driver.manage().deleteAllCookies();
