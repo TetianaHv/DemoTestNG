@@ -1,4 +1,4 @@
-package seleniumDemoLesson;
+package google;
 /*
 Create 1 automation test for testing of search result listing
 in google by search text "iphone kyiv buy". Link to "stylus.ua" should
@@ -13,6 +13,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import seleniumDemoLesson.BaseUITest;
 
 import java.util.List;
 
