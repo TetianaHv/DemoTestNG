@@ -120,8 +120,8 @@ public class CatalogPage {
 
     public void compareProductPricesByFilters(String minPrice, String maxPrice) throws Exception {
         List<WebElement> webList = webDriver.findElements(goodsListPrice);
-        for (int i = 0; i < webList.size(); i++) {
-            String str = webList.get(i).getText().replaceAll(" ", "");
+        for (WebElement webElement : webList) {
+            String str = webElement.getText().replaceAll(" ", "");
             if (Integer.parseInt(minPrice) <= Integer.parseInt(str) || Integer.parseInt(maxPrice) >= Integer.parseInt(str)) {
                 continue;
             } else {
@@ -142,8 +142,8 @@ public class CatalogPage {
 
     public void compareProductBuiltInMemoryValuesByFilters(String builtInMemoryValue) throws Exception {
         List<WebElement> webList = webDriver.findElements(goodsListNames);
-        for (int i = 0; i < webList.size(); i++) {
-            String itemName = webList.get(i).getAttribute("title");
+        for (WebElement webElement : webList) {
+            String itemName = webElement.getAttribute("title");
             if (itemName.contains(builtInMemoryValue.substring(0, 2))) {
                 continue;
             } else {
