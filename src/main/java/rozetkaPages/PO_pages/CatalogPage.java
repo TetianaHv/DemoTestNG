@@ -32,7 +32,7 @@ public class CatalogPage {
     By minPriceField = By.xpath("//input[@formcontrolname='min']");
     By maxPriceField = By.xpath("//input[@formcontrolname='max']");
     By priceButton = By.className("slider-filter__button");
-By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' and text()=' Встроенная память ']");
+    By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' and text()=' Встроенная память ']");
 
     public void waitForCatalogPageAppear() {
         wait.until(presenceOfElementLocated(waitingLocator));
@@ -86,7 +86,7 @@ By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' an
         wait.until(presenceOfAllElementsLocatedBy(goodsListPrice));
     }
 
-    public boolean compareProductNamesByFilters(String filter1, String filter2, String filter3) throws Exception {
+    public void compareProductNamesByFilters(String filter1, String filter2, String filter3) throws Exception {
         List<WebElement> listOfNames = webDriver.findElements(goodsListNames);
         for (WebElement listOfName : listOfNames) {
             String itemName = listOfName.getAttribute("title");
@@ -96,7 +96,6 @@ By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' an
                 throw new Exception(itemName + " does not contain Samsung, Apple or Honor");
             }
         }
-        return true;
     }
 
     public WebElement findPriceFilter() {
@@ -119,7 +118,7 @@ By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' an
         webDriver.findElement(priceButton).click();
     }
 
-    public boolean compareProductPricesByFilters(String minPrice, String maxPrice) throws Exception {
+    public void compareProductPricesByFilters(String minPrice, String maxPrice) throws Exception {
         List<WebElement> webList = webDriver.findElements(goodsListPrice);
         for (int i = 0; i < webList.size(); i++) {
             String str = webList.get(i).getText().replaceAll(" ", "");
@@ -129,19 +128,19 @@ By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' an
                 throw new Exception("Price " + str + " not included in the interval " + minPrice + " - " + maxPrice);
             }
         }
-        return true;
     }
 
     public WebElement findBuiltInMemoryBlock() {
         return webDriver.findElement(builtInMemoryBlock);
     }
 
-    public void checkBuiltInMemoryFilter(String filter){
+    public void checkBuiltInMemoryFilter(String filter) {
         WebElement checkboxBuiltInMemory = webDriver.findElement(By.id(filter));
         Actions act = new Actions(webDriver);
         act.moveToElement(checkboxBuiltInMemory).click().build().perform();
     }
-    public boolean compareProductBuiltInMemoryValuesByFilters(String builtInMemoryValue) throws Exception {
+
+    public void compareProductBuiltInMemoryValuesByFilters(String builtInMemoryValue) throws Exception {
         List<WebElement> webList = webDriver.findElements(goodsListNames);
         for (int i = 0; i < webList.size(); i++) {
             String itemName = webList.get(i).getAttribute("title");
@@ -151,6 +150,5 @@ By builtInMemoryBlock = By.xpath("//span[@class='sidebar-block__toggle-title' an
                 throw new Exception(itemName + " does not contain " + builtInMemoryValue);
             }
         }
-        return true;
     }
 }

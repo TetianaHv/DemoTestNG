@@ -8,8 +8,6 @@ import rozetkaPages.PO_pages.CatalogPage;
 import rozetkaPages.PO_pages.MainPage;
 import seleniumDemoLesson.BaseUITest;
 
-import static org.testng.Assert.assertTrue;
-
 public class RozetkaFiltersTests extends BaseUITest {
     String url = "https://rozetka.com.ua/";
     String searchText = "Samsung";
@@ -44,7 +42,7 @@ public class RozetkaFiltersTests extends BaseUITest {
         catalogPage.checkProducerFilterCheckbox(producerFilter2);
         //5. Verify all filtered products are products made by Samsung, Apple or Honor
         catalogPage.waitForGoodsPriceAppear();
-        assertTrue(catalogPage.compareProductNamesByFilters(searchText, producerFilter1, producerFilter2));
+        catalogPage.compareProductNamesByFilters(searchText, producerFilter1, producerFilter2);
     }
 
     @Test
@@ -66,7 +64,7 @@ public class RozetkaFiltersTests extends BaseUITest {
         catalogPage.clickPriceButton();
         //5. Verify all filtered products are products with price from range
         catalogPage.waitForGoodsPriceAppear();
-        assertTrue(catalogPage.compareProductPricesByFilters(minPrice, maxPrice));
+        catalogPage.compareProductPricesByFilters(minPrice, maxPrice);
     }
 
     @Test
@@ -85,7 +83,7 @@ public class RozetkaFiltersTests extends BaseUITest {
         catalogPage.checkBuiltInMemoryFilter(builtInMemoryValue);
         //5. Verify all filtered products
         catalogPage.waitForCatalogPageAppear();
-        assertTrue(catalogPage.compareProductBuiltInMemoryValuesByFilters(builtInMemoryValue));
+        catalogPage.compareProductBuiltInMemoryValuesByFilters(builtInMemoryValue);
     }
 
     private void scrollToElement(WebElement element) {
