@@ -10,7 +10,7 @@ import seleniumDemoLesson.BaseUITest;
 
 import static org.testng.Assert.assertEquals;
 
-public class RozetkaComparisonOfTwoMonitorsTest extends BaseUITest {
+public class ComparisonOfTwoMonitorsTest extends BaseUITest {
     private String url = "https://rozetka.com.ua/";
     private String mainPrice = "3000";
     private String subcategoryName = "Мониторы";

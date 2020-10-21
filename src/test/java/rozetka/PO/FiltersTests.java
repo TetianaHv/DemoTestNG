@@ -1,44 +1,43 @@
 package rozetka.PO;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import rozetkaPages.PO_pages.CatalogPage;
 import rozetkaPages.PO_pages.MainPage;
 import seleniumDemoLesson.BaseUITest;
 
-public class RozetkaFiltersTests extends BaseUITest {
-    String url = "https://rozetka.com.ua/";
-    String searchText = "Samsung";
-    String producerFilter1 = "Apple";
-    String producerFilter2 = "Huawei";
-    String minPrice = "5000";
-    String maxPrice = "15000";
-    String builtInMemoryValue = "256 ГБ";
+public class FiltersTests extends BaseUITest {
+    private String url = "https://rozetka.com.ua/";
+    private String searchText = "Samsung";
+    private String producerFilter1 = "Apple";
+    private String producerFilter2 = "Huawei";
+    private String minPrice = "5000";
+    private String maxPrice = "15000";
+    private String builtInMemoryValue = "256 ГБ";
+    MainPage mainPage;
+    CatalogPage catalogPage;
 
     @BeforeMethod
     public void navigateToUrl() {
         driver.get(url);
-    }
-
-    @Test
-    public void productFilterTest() throws Exception {
-        MainPage mainPage = new MainPage(driver);
-        CatalogPage catalogPage = new CatalogPage(driver);
-
+        mainPage = new MainPage(driver);
+        catalogPage = new CatalogPage(driver);
         //2. Search by "samsung
         mainPage.findAllProductsBySearchText(searchText);
         catalogPage.waitForCategoryInBlockAppear();
         //3. Click "Мобильные телефоны" in the product filters panel
         catalogPage.clickOnCategoryInBlock();
         catalogPage.waitForSidebarBlockAppear();
+    }
+
+    @Test
+    public void productFilterTest() throws Exception {
         //4. Add to filters "Apple"
-        scrollToElement(catalogPage.findProducerFilterBlock());
+        catalogPage.scrollToElement(catalogPage.findProducerFilterBlock(),driver);
         catalogPage.checkProducerFilterCheckbox(producerFilter1);
         //4. Add to filter "Honor" --"Huawei"
         catalogPage.waitForSidebarBlockAppear();
-        scrollToElement(catalogPage.findProducerFilterBlock());
+        catalogPage.scrollToElement(catalogPage.findProducerFilterBlock(),driver);
         catalogPage.checkProducerFilterCheckbox(producerFilter2);
         //5. Verify all filtered products are products made by Samsung, Apple or Honor
         catalogPage.waitForGoodsPriceAppear();
@@ -47,17 +46,8 @@ public class RozetkaFiltersTests extends BaseUITest {
 
     @Test
     public void productPriceFilterTest() throws Exception {
-        MainPage mainPage = new MainPage(driver);
-        CatalogPage catalogPage = new CatalogPage(driver);
-
-        //2. Search by "samsung"
-        mainPage.findAllProductsBySearchText(searchText);
-        catalogPage.waitForCategoryInBlockAppear();
-        //3. Click "Мобильные телефоны" in the product filters panel
-        catalogPage.clickOnCategoryInBlock();
-        catalogPage.waitForSidebarBlockAppear();
         //4. Add to price filter: 5000<price
-        scrollToElement(catalogPage.findPriceFilter());
+        catalogPage.scrollToElement(catalogPage.findPriceFilter(),driver);
         catalogPage.setMinPriceFilter(minPrice);
         //4. Add to price filter: price<15000
         catalogPage.setMaxPriceFilter(maxPrice);
@@ -69,30 +59,12 @@ public class RozetkaFiltersTests extends BaseUITest {
 
     @Test
     public void productBuiltInMemoryFilterTest() throws Exception {
-        MainPage mainPage = new MainPage(driver);
-        CatalogPage catalogPage = new CatalogPage(driver);
-
-        //2. Search by "samsung
-        mainPage.findAllProductsBySearchText(searchText);
-        catalogPage.waitForCategoryInBlockAppear();
-        //3. Click "Мобильные телефоны" in the product filters panel
-        catalogPage.clickOnCategoryInBlock();
-        catalogPage.waitForSidebarBlockAppear();
         //4. Add to filter: builtInMemoryValue = "256 ГБ"
-        scrollToElement(catalogPage.findBuiltInMemoryBlock());
+        catalogPage.scrollToElement(catalogPage.findBuiltInMemoryBlock(),driver);
         catalogPage.checkBuiltInMemoryFilter(builtInMemoryValue);
         //5. Verify all filtered products
         catalogPage.waitForCatalogPageAppear();
         catalogPage.compareProductBuiltInMemoryValuesByFilters(builtInMemoryValue);
-    }
-
-    private void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
 

@@ -5,13 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import rozetkaPages.UsefulMethods;
 
 import java.util.List;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
-public class CatalogPage {
+public class CatalogPage extends UsefulMethods {
     WebDriver webDriver;
     WebDriverWait wait;
 
