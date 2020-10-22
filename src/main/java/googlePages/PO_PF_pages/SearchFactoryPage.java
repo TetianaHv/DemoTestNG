@@ -17,6 +17,10 @@ public class SearchFactoryPage {
     @FindBy(xpath = "//input[@name='q']")
     WebElement searchInput;
 
+    public void goToMainPage(WebDriver driver, String baseUrl) {
+        driver.get(baseUrl);
+    }
+
     public void performSearchRequest(String text) {
         searchInput.sendKeys(text + Keys.ENTER);
     }

@@ -9,9 +9,10 @@ have to log in console which page contained searched link
 
 import googlePages.PO_PF_pages.SearchFactoryPage;
 import googlePages.PO_PF_pages.SearchResultFactoryPage;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import seleniumDemoLesson.BaseUITest;
+
+import static org.testng.Assert.assertTrue;
 
 public class PO_PF_SearchPhoneTest extends BaseUITest {
     private String baseUrl = "https://google.com/ncr";
@@ -19,19 +20,15 @@ public class PO_PF_SearchPhoneTest extends BaseUITest {
     private String textForSearchRequest = "iphone kyiv buy";
     private String expectedText = "stylus.ua";
 
-    @BeforeMethod
-    public void navigateToUrl() {
-        driver.get(baseUrl);
-    }
-
     @Test
-    public void positiveEnterSearchTest() throws Exception {
+    public void positiveEnterSearchTest() {
         SearchFactoryPage googleSearchFactoryPage = new SearchFactoryPage(driver);
         SearchResultFactoryPage googleSearchResultFactoryPage = new SearchResultFactoryPage(driver);
 
+        googleSearchFactoryPage.goToMainPage(driver, baseUrl);
         googleSearchFactoryPage.performSearchRequest(textForSearchRequest);
         googleSearchResultFactoryPage.waitForStatisticsAppear();
-        googleSearchResultFactoryPage.findTextOnFirstNPages(maxPageNumber, expectedText);
+        assertTrue(googleSearchResultFactoryPage.ifTextOnFirstNPages(maxPageNumber, expectedText));
     }
 }
 

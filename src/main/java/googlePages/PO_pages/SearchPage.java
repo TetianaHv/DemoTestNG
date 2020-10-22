@@ -13,6 +13,10 @@ public class SearchPage {
 
     By searchInput = By.xpath("//input[@name='q']");
 
+    public void goToMainPage(WebDriver driver, String baseUrl) {
+        driver.get(baseUrl);
+    }
+
     public void performSearchRequest(String text) {
         webDriver.findElement(searchInput).sendKeys(text + Keys.ENTER);
     }

@@ -34,19 +34,20 @@ public class SearchResultPage {
         webDriver.findElement(nextButton).click();
     }
 
-    public void findTextOnFirstNPages(int maxPageNumber, String expectedText) throws Exception {
+    public boolean isTextOnFirstNPages(int maxPageNumber, String expectedText) {
         for (int i = 1; i <= maxPageNumber; i++) {
             List<WebElement> searchResults = getAllLinksFromSearchResult();
             for (WebElement elem : searchResults) {
                 if (elem.getText().contains(expectedText)) {
                     System.out.println("[" + expectedText + "] was found on " + i + " page");
-                    return;
+                    return true;
                 }
             }
             clickOnNextPageButton();
             if (maxPageNumber == i) {
-                throw new Exception("[" + expectedText + "] was not found");
+                return false;
             }
         }
+        return false;
     }
 }
