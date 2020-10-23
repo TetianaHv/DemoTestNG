@@ -87,16 +87,17 @@ public class CatalogPage extends UsefulMethods {
         wait.until(presenceOfAllElementsLocatedBy(goodsListPrice));
     }
 
-    public void compareProductNamesByFilters(String filter1, String filter2, String filter3) throws Exception {
+    public boolean isProductNameConsistsFilterName(String filter1, String filter2, String filter3) {
         List<WebElement> listOfNames = webDriver.findElements(goodsListNames);
         for (WebElement listOfName : listOfNames) {
             String itemName = listOfName.getAttribute("title");
             if (itemName.contains(filter1) || itemName.contains(filter2) || itemName.contains(filter3)) {
                 continue;
             } else {
-                throw new Exception(itemName + " does not contain Samsung, Apple or Honor");
+                return false;
             }
         }
+        return true;
     }
 
     public WebElement findPriceFilter() {

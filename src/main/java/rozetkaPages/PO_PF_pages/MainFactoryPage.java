@@ -7,10 +7,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import rozetkaPages.UsefulMethods;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 
-public class MainFactoryPage {
+public class MainFactoryPage extends UsefulMethods {
     WebDriver webDriver;
     WebDriverWait wait;
 
@@ -52,7 +53,7 @@ public class MainFactoryPage {
         comparisonSuite.click();
     }
 
-    public void findAllProductsBySearchText(String text) {
+    public void enterSearchTextUsingSearch(String text) {
         searchButton.sendKeys(text + Keys.ENTER);
     }
 }

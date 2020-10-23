@@ -1,6 +1,5 @@
 package rozetka.PO;
 
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import rozetkaPages.PO_pages.CatalogPage;
 import rozetkaPages.PO_pages.ComparisonPage;
@@ -15,12 +14,6 @@ public class ComparisonOfTwoMonitorsTest extends BaseUITest {
     private String mainPrice = "3000";
     private String subcategoryName = "Мониторы";
 
-
-    @BeforeMethod
-    public void navigateToUrl() {
-        driver.get(url);
-    }
-
     @Test
     public void monitorComparingTest() throws Exception {
         MainPage mainPage = new MainPage(driver);
@@ -29,6 +22,7 @@ public class ComparisonOfTwoMonitorsTest extends BaseUITest {
         ComparisonPage comparisonPage = new ComparisonPage(driver);
 
         //Hover "Ноутбуки и компьютеры", click "Мониторы"
+        mainPage.navigateToUrl(driver, url);
         mainPage.hoverMenu();
         mainPage.waitForSubcategoryNameAppear(subcategoryName);
         mainPage.clickOnSubcategoryMenu();
@@ -45,10 +39,9 @@ public class ComparisonOfTwoMonitorsTest extends BaseUITest {
         String monitorName1 = productPage.getProductName();
         String monitorPrice1 = productPage.getProductPrice().replaceAll(" ", "");
         //Click back button in browser
-        driver.navigate().back();
+        catalogPage.navigateBack(driver);
         //Find first monitor which price is less then first monitor.
         // Click on image of found monitor. Wait for page to load
-        //    wait.until(presenceOfElementLocated(By.cssSelector("span.goods-tile__price-value")));
         catalogPage.waitForCatalogPageAppear();
         catalogPage.findMonitor(monitorPrice1.substring(0, 4));
         //Add second monitor to comparison.
