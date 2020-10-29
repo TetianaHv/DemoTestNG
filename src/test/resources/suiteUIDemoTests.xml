@@ -4,7 +4,7 @@
   <parameter name="one" value="Test two parameter"/>
   <test name="Main test">
     <classes>
-      <class name="seleniumDemoLesson.DemoGuruTest"/>
+      <class name="ui.seleniumDemoLesson.DemoGuruTest"/>
     </classes>
   </test>
 </suite>

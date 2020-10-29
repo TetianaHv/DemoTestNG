@@ -4,9 +4,9 @@
   <parameter name="one" value="Test two parameter"/>
   <test name="Main test">
     <classes>
-      <class name="guru99.DragAndDropTest"/>
-      <class name="guru99.HandleCookiesTest"/>
-      <class name="guru99.IframesTest"/>
+      <class name="ui.guru99.DragAndDropTest"/>
+      <class name="ui.guru99.HandleCookiesTest"/>
+      <class name="ui.guru99.IframesTest"/>
     </classes>
   </test>
 </suite>
