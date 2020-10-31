@@ -124,7 +124,7 @@ public class CatalogPage extends UsefulMethods {
         List<WebElement> webList = webDriver.findElements(goodsListPrice);
         for (WebElement webElement : webList) {
             String str = webElement.getText().replaceAll(" ", "");
-            if (Integer.parseInt(minPrice) <= Integer.parseInt(str) || Integer.parseInt(maxPrice) >= Integer.parseInt(str)) {
+            if (Integer.parseInt(minPrice) <= Integer.parseInt(str) && Integer.parseInt(maxPrice) >= Integer.parseInt(str)) {
                 continue;
             } else {
                 throw new Exception("Price " + str + " not included in the interval " + minPrice + " - " + maxPrice);
